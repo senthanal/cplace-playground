@@ -7,7 +7,9 @@ import {
 } from '@cplace-demo/shared-services';
 import { debounceTime, distinctUntilChanged, take } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'cplace-demo-ckeditor',
   standalone: true,
