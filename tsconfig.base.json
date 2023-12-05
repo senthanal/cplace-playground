@@ -7,6 +7,8 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
@@ -15,7 +17,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@cplace-demo/ckeditor": ["libs/ckeditor/src/index.ts"]
+      "@cplace-demo/ckeditor": ["libs/ckeditor/src/index.ts"],
+      "@cplace-demo/shared-services": ["libs/shared-services/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

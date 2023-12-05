@@ -1,0 +1,81 @@
+{
+  "name": "comments-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/comments-app/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/comments-app",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "apps/comments-app/src/main.ts",
+        "tsConfig": "apps/comments-app/tsconfig.app.json",
+        "assets": [
+          {
+            "input": "apps/comments-app/src/assets",
+            "glob": "*.json",
+            "output": "."
+          },
+          {
+            "input": "apps/comments-app/src/assets",
+            "glob": "*.ico",
+            "output": "./public"
+          },
+          {
+            "input": "apps/comments-app/src/public",
+            "glob": "*.html",
+            "output": "./public"
+          }
+        ],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "legalComments": "inline",
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "comments-app:build",
+        "cwd": "dist/apps/comments-app",
+        "command": "node main.js"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "comments-app:build:development"
+        },
+        "production": {
+          "buildTarget": "comments-app:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/comments-app/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
