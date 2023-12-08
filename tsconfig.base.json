@@ -17,6 +17,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@cplace-demo": ["libs/license-stats/src/index.ts"],
       "@cplace-demo/ckeditor": ["libs/ckeditor/src/index.ts"],
       "@cplace-demo/shared-services": ["libs/shared-services/src/index.ts"]
     }

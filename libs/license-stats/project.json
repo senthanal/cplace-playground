@@ -1,0 +1,51 @@
+{
+  "name": "license-stats",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/license-stats/src",
+  "projectType": "library",
+  "dependsOn": [{ "projects": "self", "target": "run", "params": "forward" }],
+  "targets": {
+    "run-license": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "ts-node ./license-stat.cli.ts",
+        "cwd": "libs/license-stats/src/lib"
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/license-stats",
+        "main": "libs/license-stats/src/index.ts",
+        "tsConfig": "libs/license-stats/tsconfig.lib.json",
+        "assets": ["libs/license-stats/*.md"],
+        "generatePackageJson": true,
+        "format": ["cjs"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs license-stats {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/license-stats/**/*.ts",
+          "libs/license-stats/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/libs/license-stats"
+      }
+    }
+  },
+  "tags": ["shared"]
+}
