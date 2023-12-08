@@ -18,7 +18,8 @@
     "baseUrl": ".",
     "paths": {
       "@cplace-demo/ckeditor": ["libs/ckeditor/src/index.ts"],
-      "@cplace-demo/shared-services": ["libs/shared-services/src/index.ts"]
+      "@cplace-demo/shared-services": ["libs/shared-services/src/index.ts"],
+      "cplace-demo/license-stats": ["libs/license-stats/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
