@@ -49,13 +49,21 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 
+      - name: Cache Cypress Binary
+        id: cache-cypress-binary
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/Cypress
+          key: ${{ runner.os }}-binary-${{ hashFiles('package-lock.json') }}
+
+
       - name: Install modules
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci --legacy-peer-deps
 
       - name: Test a11y app
         run: npx nx run a11y-e2e:e2e
-        
+
       - name: Publish Test Results in PR
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
