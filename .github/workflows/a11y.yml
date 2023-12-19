@@ -68,9 +68,9 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Test a11y app
-        env:
-          CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
-        run: npx nx run a11y-e2e:e2e
+        uses: cypress-io/github-action@v6
+        with:
+          start: npx nx run a11y-e2e:e2e
 
       - name: Publish Test Results in PR
         uses: EnricoMi/publish-unit-test-result-action@v2
