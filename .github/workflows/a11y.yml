@@ -22,13 +22,6 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Cache Cypress Binary
-        id: cache-cypress-binary
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/Cypress
-          key: ${{ runner.os }}-binary-${{ hashFiles('package-lock.json') }}
-
       - name: Install modules
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci --legacy-peer-deps
@@ -68,7 +61,7 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Install Cypress Binary
-        run: npx cypress install --legacy-peer-deps
+        run: npx cypress install
 
       - name: Test a11y app
         run: npx nx run a11y-e2e:e2e

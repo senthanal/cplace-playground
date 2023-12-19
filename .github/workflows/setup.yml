@@ -23,6 +23,13 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 
+      - name: Cache Cypress Binary
+        id: cache-cypress-binary
+        uses: actions/cache@v2
+        with:
+          path: home/runner/.cache/Cypress
+          key: ${{ runner.os }}-binary-${{ hashFiles('package-lock.json') }}
+
       - name: Install modules
         if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci --legacy-peer-deps
