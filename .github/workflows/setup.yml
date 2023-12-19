@@ -1,0 +1,28 @@
+name: Setup Node and Dependencies
+
+on:
+  workflow_call:
+
+jobs:
+  triage:
+    name: Setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18.18.2
+          cache: 'npm'
+
+      - name: Cache Node Modules
+        id: npm-cache
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install modules
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: npm ci --legacy-peer-deps
