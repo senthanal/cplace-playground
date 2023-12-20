@@ -1,4 +1,5 @@
 import { getSubTitle } from '../support/app.po';
+import { getAxeOptions, terminalLog } from './utils';
 
 describe('a11y-e2e', () => {
   beforeEach(() => {
@@ -7,7 +8,7 @@ describe('a11y-e2e', () => {
   });
 
   afterEach(() => {
-    cy.checkA11y();
+    cy.checkA11y("h2", getAxeOptions(), terminalLog, true);
   });
 
   it('should display welcome message', () => {
