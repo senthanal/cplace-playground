@@ -33,6 +33,9 @@ jobs:
     name: Integration Tests
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      checks: write
+      pull-requests: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -63,12 +66,20 @@ jobs:
       - name: Install Cypress Binary
         run: npx cypress install
 
+      - name: Delete previous reports
+        run: rm cypress/a11y/junit/* || true
+
       - name: Test a11y app
         run: npx nx run a11y-e2e:e2e
 
+      - name: Combine junit reports
+        run: jrm cypress/a11y/junit/combined-report.xml "cypress/a11y/junit/*.xml"
+
       - name: Publish Test Results in PR
         uses: EnricoMi/publish-unit-test-result-action@v2
+        id: test-results
         if: always()
         with:
           files: |
+            cypress/a11y/junit/combined-report.xml
             cypress/a11y/index.json
