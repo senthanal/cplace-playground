@@ -72,6 +72,9 @@ jobs:
       - name: Test a11y app
         run: npx nx run a11y-e2e:e2e
 
+      - name: Combine junit reports
+        run: jrm cypress/a11y/combined-junit-report.xml "cypress/a11y/junit/*.xml"
+
       - name: Publish Test Results in PR
         uses: EnricoMi/publish-unit-test-result-action@v2
         id: test-results
