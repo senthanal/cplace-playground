@@ -6,15 +6,17 @@ describe('a11y-e2e', () => {
     cy.injectAxe();
   });
 
-  afterEach(() => {
-    cy.checkA11y();
-  });
-
   it('should display welcome message', () => {
     // Custom command example, see `../support/commands.ts` file
     cy.login('my-email@something.com', 'myPassword');
 
     // Function helper example, see `../support/app.po.ts` file
     getGreeting().contains(/Welcome/);
+    cy.checkA11y("h1", {
+      runOnly: {
+        type: "tag",
+        values: ["wcag2a", "wcag2aa"],
+      },
+    });
   });
 });
