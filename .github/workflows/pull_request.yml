@@ -26,9 +26,6 @@ jobs:
       checks: write
       pull-requests: write
     steps:
-      - name: Setup
-        uses: .setup.yml
-
       - name: Install Cypress Binary
         run: npx cypress install
 
