@@ -7,11 +7,11 @@ on:
 permissions: write-all
 
 jobs:
-  setup:
+  install-deps:
     uses: senthanal/cplace-playground/.github/workflows/setup.yml@main
 
   build:
-    needs: setup
+    needs: install-deps
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +19,7 @@ jobs:
         run: npx nx run a11y:build
 
   e2e:
-    needs: build
+    needs: install-deps
     name: Integration Tests
     runs-on: ubuntu-latest
     permissions:

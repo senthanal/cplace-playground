@@ -4,8 +4,8 @@ on:
   workflow_call:
 
 jobs:
-  triage:
-    name: Setup
+  install-deps:
+    name: Setup Node and Dependencies
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
