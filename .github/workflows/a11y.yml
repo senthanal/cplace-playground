@@ -82,4 +82,3 @@ jobs:
         with:
           files: |
             cypress/a11y/junit/combined-report.xml
-            cypress/a11y/index.json
