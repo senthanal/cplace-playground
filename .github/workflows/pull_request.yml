@@ -12,74 +12,8 @@ jobs:
 
   build:
     needs: install-deps
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18.18.2
-          cache: 'npm'
-
-      - name: Cache Node Modules
-        id: npm-cache
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Install modules
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci --legacy-peer-deps
-
-      - name: Build a11y app
-        run: npx nx run a11y:build
+    uses: senthanal/cplace-playground/.github/workflows/build.yml@main
 
   e2e:
     needs: install-deps
-    name: Integration Tests
-    runs-on: ubuntu-latest
-    permissions:
-      checks: write
-      pull-requests: write
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18.18.2
-          cache: 'npm'
-
-      - name: Cache Node Modules
-        id: npm-cache
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Install modules
-        if: steps.npm-cache.outputs.cache-hit != 'true'
-        run: npm ci --legacy-peer-deps
-
-      - name: Install Cypress Binary
-        run: npx cypress install
-
-      - name: Delete previous reports
-        run: rm cypress/a11y/junit/* || true
-
-      - name: Test a11y app
-        run: npx nx run a11y-e2e:e2e
-
-      - name: Combine junit reports
-        run: npx jrm cypress/a11y/combined-junit-report.xml "cypress/a11y/junit/*.xml"
-
-      - name: Publish Test Results in PR
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        id: test-results
-        if: always()
-        with:
-          files: |
-            cypress/a11y/junit/*.xml
+    uses: senthanal/cplace-playground/.github/workflows/e2e.yml@main
